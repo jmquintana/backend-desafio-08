@@ -1,8 +1,5 @@
 import { productsService } from "../services/products.service.js";
-import CartsManager from "../controllers/carts.js";
-import socket from "../socket.js";
-
-const cartsManager = new CartsManager();
+import { cartsService } from "../services/carts.service.js";
 
 export async function getProducts(req, res) {
 	const { limit, page, category, status, sort } = req.query;
@@ -30,7 +27,7 @@ export async function getPaginatedProducts(req, res) {
 	user.isAdmin = user?.role === "admin";
 
 	if (user.cart)
-		user.cartCount = await cartsManager.getCartCount(user.cart._id);
+		user.cartCount = await cartsService.getCartCount(user.cart._id);
 
 	if (category) {
 		filters.category = category;
@@ -91,8 +88,6 @@ export async function addProduct(req, res) {
 		message: "Product added",
 		result,
 	};
-	socket.io.emit("product_added", response);
-
 	return res.send(response);
 }
 

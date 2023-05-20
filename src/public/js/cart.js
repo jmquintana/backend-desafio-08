@@ -130,12 +130,10 @@ removeProductsBtn.forEach((btn) => {
 	btn.addEventListener("click", (e) => {
 		e.stopPropagation();
 		e.preventDefault();
-		console.log(e.target.parentNode.parentNode.parentNode);
 		const cardElement = e.target.parentNode.parentNode.parentNode.querySelector(
 			".remove-products-btn"
 		).parentNode.parentNode.parentNode.parentNode;
 		const productId = cardElement.id;
-		console.log(productId);
 		try {
 			fetch(`/api/carts/${cartId}/allProducts/${productId}`, {
 				method: "DELETE",

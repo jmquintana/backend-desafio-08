@@ -1,15 +1,13 @@
 import passport from "passport";
 import local from "passport-local";
 import userModel from "../models/users.model.js";
-import { cartsModel } from "../models/carts.model.js";
-import CartsManager from "../controllers/carts.js";
+import { cartsService } from "../services/carts.service.js";
 import { createHash, isValidPassword } from "../utils.js";
 import GitHubStrategy from "passport-github2";
 import config from "../config.js";
 
 const { CLIENT_ID, CLIENT_SECRET, CALLBACK_URL } = config;
 
-const cartsManager = new CartsManager();
 const LocalStrategy = local.Strategy;
 const initializePassport = () => {
 	passport.use(
@@ -29,7 +27,7 @@ const initializePassport = () => {
 						return done(null, false);
 					}
 
-					const cart = await cartsManager.addCart({ products: [] });
+					const cart = await cartsService.addCart({ products: [] });
 					const cartId = cart._id;
 					console.log("linea 23", { cartId });
 
@@ -101,7 +99,7 @@ const initializePassport = () => {
 							email: profile._json.email,
 							age: 18,
 							role: "user",
-							cart: await cartsManager.addCart({ products: [] }),
+							cart: await cartsService.addCart({ products: [] }),
 							password: "",
 						};
 						const result = await userModel.create(newUser);

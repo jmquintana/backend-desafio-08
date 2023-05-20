@@ -45,7 +45,7 @@ const animateCSS = (element, animation, prefix = "animate__") =>
 		const animationName = `${prefix}${animation}`;
 		const node = document.querySelector(element);
 
-		node.classList.add(`${prefix}animated`, animationName);
+		node?.classList.add(`${prefix}animated`, animationName);
 
 		// When the animation ends, we clean the classes and resolve the Promise
 		function handleAnimationEnd(event) {
@@ -54,7 +54,7 @@ const animateCSS = (element, animation, prefix = "animate__") =>
 			resolve("Animation ended");
 		}
 
-		node.addEventListener("animationend", handleAnimationEnd, { once: true });
+		node?.addEventListener("animationend", handleAnimationEnd, { once: true });
 	});
 
 products.forEach((product) => {

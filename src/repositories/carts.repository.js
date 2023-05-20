@@ -2,7 +2,7 @@ import { cartsModel } from "../models/carts.model.js";
 import { productModel } from "../models/products.model.js";
 import { ObjectId } from "mongodb";
 
-export default class CartManager {
+class CartsRepository {
 	constructor() {}
 
 	getCarts = async () => {
@@ -154,16 +154,16 @@ export default class CartManager {
 		}
 	};
 
-	getCartCount = async (cartId) => {
-		try {
-			const cart = await this.getCartById(cartId);
-			return cart.products.length;
-		} catch (error) {
-			console.log(error);
-		}
-	};
+	// getCartCount = async (cartId) => {
+	// 	try {
+	// 		const cart = await this.getCartById(cartId);
+	// 		return cart.products.length;
+	// 	} catch (error) {
+	// 		console.log(error);
+	// 	}
+	// };
 
-	deleteAllProductFromCart = async (productId, cartId) => {
+	deleteAllProductsFromCart = async (productId, cartId) => {
 		//get product from Model
 		const product = await productModel.findOne({
 			_id: new ObjectId(productId),
@@ -173,6 +173,7 @@ export default class CartManager {
 		const cart = await cartsModel.findOne({
 			_id: new ObjectId(cartId),
 		});
+
 		if (!cart) throw new Error("Cart not found");
 		//check if product is already in cart
 		const productInCart = cart.products.find(
@@ -191,3 +192,5 @@ export default class CartManager {
 		}
 	};
 }
+
+export const cartsRepository = new CartsRepository();
