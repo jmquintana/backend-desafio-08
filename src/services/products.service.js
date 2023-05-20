@@ -3,8 +3,8 @@ import { productsRepository } from "../repositories/products.repository.js";
 class ProductsService {
 	constructor() {}
 
-	getProducts(limit, page, category, status, sort) {
-		const products = productsRepository.getProducts(
+	getProducts = async (limit, page, category, status, sort) => {
+		const products = await productsRepository.getProducts(
 			limit,
 			page,
 			category,
@@ -12,7 +12,7 @@ class ProductsService {
 			sort
 		);
 		return products;
-	}
+	};
 
 	getPaginatedProducts = async (filters, options) => {
 		const result = await productsRepository.getPaginatedProducts(
@@ -22,7 +22,7 @@ class ProductsService {
 		return result;
 	};
 
-	addProduct(product, files) {
+	addProduct = async (product, files) => {
 		product.thumbnails = [];
 
 		if (files) {
@@ -31,27 +31,29 @@ class ProductsService {
 				product.thumbnails.push(imageUrl);
 			});
 		}
-		const result = productsRepository.addProduct(product);
-
+		const result = await productsRepository.addProduct(product);
 		return result;
-	}
+	};
 
-	getProductById(productId) {
-		const result = productsRepository.getProductById(productId);
+	getProductById = async (productId) => {
+		const result = await productsRepository.getProductById(productId);
 		return result;
-	}
+	};
 
-	addManyProducts(arrOfProducts) {
-		const result = productsRepository.addManyProducts(arrOfProducts);
+	addManyProducts = async (arrOfProducts) => {
+		const result = await productsRepository.addManyProducts(arrOfProducts);
 		return result;
-	}
+	};
 
-	updateProduct(productId, changes) {
-		const result = productsRepository.updateProduct(productId, changes);
+	updateProduct = async (productId, changes) => {
+		const result = await productsRepository.updateProduct(productId, changes);
 		return result;
-	}
+	};
 
-	deleteProduct(productId) {}
+	deleteProduct = async (productId) => {
+		const result = await productsRepository.deleteProduct(productId);
+		return result;
+	};
 }
 
 export const productsService = new ProductsService();

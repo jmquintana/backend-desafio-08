@@ -4,7 +4,7 @@ class CartsService {
 	constructor() {}
 
 	getCarts = async () => {
-		const carts = awaitcartsRepository.getCarts();
+		const carts = await cartsRepository.getCarts();
 		return carts;
 	};
 
@@ -53,7 +53,7 @@ class CartsService {
 	};
 
 	editProductQuantity = async (productId, cartId, quantity) => {
-		const result = awaitcartsRepository.editProductInCart(
+		const result = await cartsRepository.editProductInCart(
 			productId,
 			cartId,
 			quantity

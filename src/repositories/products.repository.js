@@ -19,6 +19,7 @@ class ProductsRepository {
 			return products;
 		} catch (error) {
 			console.log(error);
+			return error;
 		}
 	};
 
@@ -28,6 +29,7 @@ class ProductsRepository {
 			return result;
 		} catch (error) {
 			console.log(error);
+			return error;
 		}
 	};
 
@@ -36,7 +38,8 @@ class ProductsRepository {
 			const result = await productModel.create(product);
 			return result;
 		} catch (error) {
-			console.log(error);
+			console.error(error);
+			return error;
 		}
 	};
 
@@ -46,6 +49,7 @@ class ProductsRepository {
 			return result;
 		} catch (error) {
 			console.log(error);
+			return error;
 		}
 	};
 
@@ -55,6 +59,7 @@ class ProductsRepository {
 			return result;
 		} catch (error) {
 			console.log(error);
+			return error;
 		}
 	};
 
@@ -64,10 +69,19 @@ class ProductsRepository {
 			return result;
 		} catch (error) {
 			console.log(error);
+			return error;
 		}
 	};
 
-	deleteProduct = async (productId) => {};
+	deleteProduct = async (productId) => {
+		try {
+			const result = await productModel.deleteOne({ _id: productId });
+			return result;
+		} catch (error) {
+			console.error(error);
+			return error;
+		}
+	};
 }
 
 export const productsRepository = new ProductsRepository();

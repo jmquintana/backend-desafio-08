@@ -11,6 +11,7 @@ class CartsRepository {
 			return carts;
 		} catch (error) {
 			console.log(error);
+			return error;
 		}
 	};
 
@@ -20,6 +21,7 @@ class CartsRepository {
 			return createdCart;
 		} catch (error) {
 			console.log(error);
+			return error;
 		}
 	};
 
@@ -33,6 +35,7 @@ class CartsRepository {
 			return cart;
 		} catch (error) {
 			console.log(error);
+			return error;
 		}
 	};
 
@@ -74,6 +77,7 @@ class CartsRepository {
 			}
 		} catch (error) {
 			console.log(error);
+			return error;
 		}
 	};
 
@@ -89,6 +93,7 @@ class CartsRepository {
 			return updatedCart;
 		} catch (error) {
 			console.log(error);
+			return error;
 		}
 	};
 
@@ -107,6 +112,7 @@ class CartsRepository {
 			return updatedCart;
 		} catch (error) {
 			console.log(error);
+			return error;
 		}
 	};
 
@@ -118,6 +124,7 @@ class CartsRepository {
 			return deletedCart;
 		} catch (error) {
 			console.log(error);
+			return error;
 		}
 	};
 
@@ -153,15 +160,6 @@ class CartsRepository {
 			throw new Error("Product not found in cart");
 		}
 	};
-
-	// getCartCount = async (cartId) => {
-	// 	try {
-	// 		const cart = await this.getCartById(cartId);
-	// 		return cart.products.length;
-	// 	} catch (error) {
-	// 		console.log(error);
-	// 	}
-	// };
 
 	deleteAllProductsFromCart = async (productId, cartId) => {
 		//get product from Model

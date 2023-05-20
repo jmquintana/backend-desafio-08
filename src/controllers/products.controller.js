@@ -111,3 +111,10 @@ export async function updateProduct(req, res) {
 
 	return res.send({ status: "Success", payload: result });
 }
+
+export async function deleteProduct(req, res) {
+	const productId = req.params.pid;
+	const result = await productsService.deleteProduct(productId);
+
+	return res.send({ status: "Success", payload: result });
+}

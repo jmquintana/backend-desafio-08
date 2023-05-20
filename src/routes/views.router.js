@@ -1,27 +1,17 @@
 import { Router } from "express";
-import { productModel } from "../models/products.model.js";
 import { checkLogged, checkLogin, checkSession } from "../middlewares/auth.js";
 import {
-	addProduct,
 	getPaginatedProducts,
 	getProductById,
 } from "../controllers/products.controller.js";
 import {
 	renderCartById,
 	editProductQuantity,
-	addProductToCart,
 } from "../controllers/carts.controller.js";
 
 const router = Router();
 
 router.get("/", checkLogin, getPaginatedProducts);
-
-// router.post("/:cid/product/:pid", addProductToCart);
-
-router.get("/realtimeproducts", async (req, res) => {
-	const products = await productModel.find().lean();
-	res.render("realTimeProducts", { products });
-});
 
 router.get("/product/:pid", getProductById);
 

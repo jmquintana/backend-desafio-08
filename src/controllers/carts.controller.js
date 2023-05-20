@@ -1,5 +1,4 @@
 import { cartsService } from "../services/carts.service.js";
-import { ObjectId } from "mongodb";
 
 export async function renderCartById(req, res) {
 	const cartId = req.params.cid;
@@ -18,13 +17,6 @@ export async function editProductQuantity(req, res) {
 	);
 	return res.send({ status: "Success", result });
 }
-
-// export async function addProductToCart(req, res) {
-// 	const cartId = req.params.cid;
-// 	const productId = req.params.pid;
-// 	const result = await cartsService.addProductToCart(productId, cartId);
-// 	return res.render("carts", { status: "Success", result });
-// }
 
 export async function addCart(req, res) {
 	const result = await cartsService.addCart();
