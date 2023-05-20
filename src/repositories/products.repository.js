@@ -1,12 +1,31 @@
 import { productModel } from "../models/products.model.js";
 
-export default class ProductManager {
+class ProductsRepository {
 	constructor() {}
 
-	getProducts = async () => {
+	getProducts = async (limit, page, category, status, sort) => {
 		try {
-			const products = await productModel.find();
+			limit = parseInt(limit) || 5;
+			page = parseInt(page) || 1;
+			let products = await productModel.paginate(
+				{},
+				{
+					limit,
+					page,
+					lean: true,
+				}
+			);
+
 			return products;
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	getPaginatedProducts = async (filters, options) => {
+		try {
+			const result = await productModel.paginate(filters, options);
+			return result;
 		} catch (error) {
 			console.log(error);
 		}
@@ -39,7 +58,16 @@ export default class ProductManager {
 		}
 	};
 
-	updateProduct = async (productId, product) => {};
+	updateProduct = async (productId, changes) => {
+		try {
+			const result = await productModel.updateOne({ _id: productId }, changes);
+			return result;
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	deleteProduct = async (productId) => {};
 }
+
+export const productsRepository = new ProductsRepository();

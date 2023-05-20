@@ -1,50 +1,14 @@
 import { Router } from "express";
 import { productModel } from "../models/products.model.js";
-import ProductManager from "../controllers/products.js";
-import CartsManager from "../controllers/carts.js";
 import { checkLogged, checkLogin, checkSession } from "../middlewares/auth.js";
+import {
+	getPaginatedProducts,
+	getProductById,
+} from "../controllers/products.controller.js";
 
-const cartsManager = new CartsManager();
-const productsManager = new ProductManager();
 const router = Router();
 
-router.get("/", checkLogin, async (req, res) => {
-	const { page = 1, limit = 5 } = req.query;
-	let { user } = req.session;
-	user.isAdmin = user?.role === "admin";
-
-	if (user.cart)
-		user.cartCount = await cartsManager.getCartCount(user.cart._id);
-
-	const {
-		docs: products,
-		hasPrevPage,
-		hasNextPage,
-		prevPage,
-		nextPage,
-		totalDocs,
-		totalPages,
-	} = await productModel.paginate(
-		{},
-		{
-			page,
-			limit,
-			lean: true,
-		}
-	);
-
-	return res.render("products", {
-		products,
-		page,
-		hasPrevPage,
-		hasNextPage,
-		prevPage,
-		nextPage,
-		totalDocs,
-		totalPages,
-		user,
-	});
-});
+router.get("/", checkLogin, getPaginatedProducts);
 
 router.post("/:cid/product/:pid", async (req, res) => {
 	const cartId = req.params.cid;
@@ -58,11 +22,7 @@ router.get("/realtimeproducts", async (req, res) => {
 	res.render("realTimeProducts", { products });
 });
 
-router.get("/product/:pid", async (req, res) => {
-	const productId = req.params.pid;
-	const product = await productsManager.getProductById(productId);
-	res.render("product", product[0]);
-});
+router.get("/product/:pid", getProductById);
 
 // update product quantity in cart
 router.put("/:cid", async (req, res) => {
